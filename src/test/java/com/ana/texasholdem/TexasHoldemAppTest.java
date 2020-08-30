@@ -15,39 +15,31 @@ public class TexasHoldemAppTest {
 
     @Test
     public void testReturnCorrectNumberOfPlayers() {
-        String input = "4cKs4h8s7s Ad4s Ac4d As9s KhKd 10d6d";
+        String input = "4cKs4h8s7s Ad4s Ac4d As9s KhKd Td6d";
         int expected = 5;
         int actual = TexasHoldemApp.getNumberOfPlayers(input);
         assertEquals("Cannot count number of players", expected, actual);
     }
 
     @Test
-    public void testSpacesAndTensRemoved() {
-        String input = "4c10s4h10s7s  Ad4s  Ac4d   10hKd";
-        String expected = "4c1s4h1s7s Ad4s Ac4d 1hKd";
-        String actual = TexasHoldemApp.removeSpacesAndTens(input);
+    public void testSpacesRemoved() {
+        String input = "4cTs4hTs7s  Ad4s  Ac4d   ThKd";
+        String expected = "4cTs4hTs7s Ad4s Ac4d ThKd";
+        String actual = TexasHoldemApp.removeSpaces(input);
         assertEquals("Not able to remove spaces and tens", expected, actual);
     }
 
     @Test
-    public void testSpacesAndTensNotRemoved() {
-        String input = "4c10s4h10s7s  Ad4s  Ac4d   10hKd";
-        String expected = "4c1s4h1s7s Ad4s  Ac4d 1hKd";
-        String actual = TexasHoldemApp.removeSpacesAndTens(input);
+    public void testSpacesNotRemoved() {
+        String input = "4cTs4hTs7s  Ad4s  Ac4d   ThKd";
+        String expected = "4cTs4hTs7s Ad4s  Ac4d ThKd";
+        String actual = TexasHoldemApp.removeSpaces(input);
         assertNotEquals("Not able to remove spaces and tens", expected, actual);
     }
 
     @Test
-    public void testInsertTens() {
-        String input = "4c1s4h1s7s Ad4s 1c4d";
-        String expected = "4c10s4h10s7s Ad4s 10c4d";
-        String actual = TexasHoldemApp.insertTens(input);
-        assertEquals("Not able to insert tens", expected, actual);
-    }
-
-    @Test
     public void testGettingListOfCards() {
-        String input = "AcAdQc1s9h";
+        String input = "AcAdQcTs9h";
         List<Card> actualCards = TexasHoldemApp.getListOfCards(input);
         List<Card> expectedCards = new ArrayList<>();
         expectedCards.add(new Card("c", 14));
@@ -73,7 +65,7 @@ public class TexasHoldemAppTest {
 
     @Test
     public void testReplaceRankToNumeric() {
-        String input1 = "1";
+        String input1 = "T";
         String actualOutput1 = TexasHoldemApp.replaceRankToNumeric(input1);
         String expectedOutput1 = "10";
 
@@ -119,10 +111,15 @@ public class TexasHoldemAppTest {
         String actualOutput4 = TexasHoldemApp.replaceNumericToRank(input4);
         String expectedOutput4 = "A";
 
+        String input5 = "10";
+        String actualOutput5 = TexasHoldemApp.replaceNumericToRank(input5);
+        String expectedOutput5 = "T";
+
 
         assertEquals("Not able to convert rank to numeric value", expectedOutput1, actualOutput1);
         assertEquals("Not able to convert rank to numeric value", expectedOutput2, actualOutput2);
         assertEquals("Not able to convert rank to numeric value", expectedOutput3, actualOutput3);
         assertEquals("Not able to convert rank to numeric value", expectedOutput4, actualOutput4);
+        assertEquals("Not able to convert rank to numeric value", expectedOutput5, actualOutput5);
     }
 }

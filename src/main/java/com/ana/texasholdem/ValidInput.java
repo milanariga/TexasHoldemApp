@@ -44,10 +44,10 @@ public class ValidInput {
         cards.add("9d");
         cards.add("9c");
         cards.add("9h");
-        cards.add("10s");
-        cards.add("10d");
-        cards.add("10c");
-        cards.add("10h");
+        cards.add("Ts");
+        cards.add("Td");
+        cards.add("Tc");
+        cards.add("Th");
         cards.add("Js");
         cards.add("Jd");
         cards.add("Jc");

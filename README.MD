@@ -1,5 +1,5 @@
 *******************************
-DESCRIPTION
+#DESCRIPTION
 *******************************
 TexasHoldemApp is an algorithm to find best possible combinations of the game written in JAVA using stdin/stdout.
 
@@ -25,23 +25,28 @@ alphabetically and separated by "=" signs
 • The order of the cards in each hand should remains the same as in the input, no reordering of hand cards implemented.
 
 **********************************
-REQUEREMENTS
+#REQUEREMENTS
 **********************************
-Project requeres Java 1.8 as minimal version
+Project requires Java 1.8 as minimal version
 
 **********************************
-RUN
+#BUILD
+**********************************
+Run command: *mvn install*
+
+**********************************
+#RUN
 **********************************
 To run the project use command:
-java -jar TexasHoldemAppDep.jar arg1
+*java -jar TexasHoldemAppDep.jar arg1*
 where
 arg1 = path to input file
 
-EXAMPLE:
-java -jar TexasHoldemAppDep.jar /Users/{username}/{dir}/MyFile.txt
+**EXAMPLE:**
+*java -jar {jarFileName}.jar /Users/{username}/{dir}/MyFile.txt*
 
 **********************************
-NOTES
+#NOTES
 **********************************
 NB! When removing duplicated cards before checking for straight combination, suit is not taken into account,
 that could result in missing royal flush or straight flush.

@@ -19,11 +19,11 @@ public class TexasHoldemApp {
         String file = "";
         if (args.length == 0){
             System.out.println("No path to file found");
+            System.exit(1);
         }
         else {
             file = args[0];
         }
-        //String file = "/Users/dark1/Desktop/Input.txt";
         readFile(file);
     }
 
@@ -40,7 +40,7 @@ public class TexasHoldemApp {
                     continue;
                 }
                 List<Player> players = new ArrayList<>();
-                line = removeSpacesAndTens(line);
+                line = removeSpaces(line);
                 //System.out.println(line);
                 int numOfPlayers = getNumberOfPlayers(line);
 
@@ -50,16 +50,16 @@ public class TexasHoldemApp {
                 table.setTableCards(tableCards);
                 Combinations comb = new Combinations();
                 comb.findBestTableCombination(table,tableCards);
-                //System.out.println(table.getWinValue());
-                //System.out.println(table.getBestCombination().toString());
+                System.out.println(table.getWinValue());
+                System.out.println(table.getBestCombination().toString());
 
                 for (int i = 0; i < numOfPlayers; i++) {
                     List<Card> playerCards = getListOfCards(line.substring(11 + 5*i, 11 + 5*i +4));
                     Player player = new Player();
                     player.setHandCards(playerCards);
                     comb.findBestPlayerCombination(player, table.getTableCards());
-                    //System.out.println(player.getWinValue());
-                    //System.out.println(player.getBestCombination());
+                    System.out.println(player.getWinValue());
+                    System.out.println(player.getBestCombination());
                     players.add(player);
                 }
                 comparePlayerCombinations(players);
@@ -133,14 +133,8 @@ public class TexasHoldemApp {
         return CharMatcher.is(' ').countIn(line);
     }
 
-    public static String removeSpacesAndTens(String input){
-        String output = input.trim().replaceAll(" +", " ");
-        output = output.trim().replaceAll("10", "1");
-        return output;
-    }
-
-    public static String insertTens(String input){
-        return input.trim().replaceAll("1", "10");
+    public static String removeSpaces(String input){
+        return input.trim().replaceAll(" +", " ");
     }
 
     public static List<Card> getListOfCards(String input){
@@ -151,7 +145,7 @@ public class TexasHoldemApp {
             card = input.substring(i * 2, i * 2 + 2);
             String cardRank = card.substring(0,1);
             int replacedCardRank;
-            if (cardRank.equals("1") ||
+            if (cardRank.equals("T") ||
                     cardRank.equals("J") ||
                     cardRank.equals("Q") ||
                     cardRank.equals("K") ||
@@ -170,8 +164,8 @@ public class TexasHoldemApp {
 
     public static String replaceRankToNumeric(String inCard){
         String newElem = "";
-        if (inCard.contains("1")){
-            newElem = inCard.replace("1", "10");
+        if (inCard.contains("T")){
+            newElem = inCard.replace("T", "10");
         }
         else if (inCard.contains("J")){
             newElem = inCard.replace("J", "11");
@@ -189,6 +183,9 @@ public class TexasHoldemApp {
     }
 
     public static String replaceNumericToRank(String inCard){
+        if (inCard.contains("10")){
+            inCard = inCard.replaceAll("10", "T");
+        }
         if (inCard.contains("11")){
             inCard = inCard.replaceAll("11", "J");
         }
