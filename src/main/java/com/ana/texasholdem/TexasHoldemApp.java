@@ -8,6 +8,7 @@ import com.google.common.base.CharMatcher;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.*;
 
@@ -16,24 +17,12 @@ import java.util.*;
  */
 public class TexasHoldemApp {
     public static void main(String[] args) throws ParseException {
-        String file = "";
-        if (args.length == 0){
-            System.out.println("No path to file found");
-            System.exit(1);
-        }
-        else {
-            file = args[0];
-        }
-        readFile(file);
-    }
-
-    public static void readFile(String file) throws ParseException {
-        BufferedReader reader;
         try{
-            reader = new BufferedReader(new FileReader(file));
+            InputStreamReader in = new InputStreamReader(System.in);
+            BufferedReader input = new BufferedReader(in);
             String line;
 
-            while ((line = reader.readLine()) != null){
+            while ((line = input.readLine()) != null){
                 String validatedInput = ValidInput.validateInput(line);
                 if (!validatedInput.isEmpty()){
                     System.out.println("Not acceptable symbols found in the input line");
@@ -64,7 +53,6 @@ public class TexasHoldemApp {
                 }
                 comparePlayerCombinations(players);
             }
-            reader.close();
         }
         catch (IOException e){
             e.printStackTrace();
