@@ -37,13 +37,20 @@ Run command: *mvn install*
 **********************************
 #RUN
 **********************************
-To run the project use command:
-*java -jar TexasHoldemAppDep.jar arg1*
-where
-arg1 = path to input file
+To run the project:
+1. Using linux CLI:
+*java -jar TexasHoldemAppDep.jar < file*
+where file = file to read
 
-**EXAMPLE:**
-*java -jar {jarFileName}.jar /Users/{username}/{dir}/MyFile.txt*
+2. Using linux CLI to read one line:
+*echo 'line' | java -jar TexasHoldemAppDep.jar*
+
+3. Running from the IDE terminal:
+*Run main method*
+*Paste input*
+
+
+where TexasHoldemAppDep.jar = jar file name
 
 **********************************
 #NOTES
