@@ -312,10 +312,10 @@ public class Combinations {
         }
     }
 
-    public List<Card> isStraight(List<Card> input){
+    public List<Card> isStraight(List<Card> inputFull){
         List<Card> straight = new ArrayList<>();
+        List<Card> input = removeDuplicateRanks(inputFull);
         int skippedCards = 0;
-        removeDuplicateRanks(input);
         if (input.size() < 5){
             return straight;
         }
@@ -345,6 +345,7 @@ public class Combinations {
                 }
             } else {
                 skippedCards++;
+                straight.clear();
                 if (skippedCards > input.size() - 5){
                     straight.clear();
                     return straight;

@@ -6,7 +6,6 @@ import com.ana.texasholdem.model.Table;
 import com.google.common.base.CharMatcher;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
@@ -42,16 +41,16 @@ public class TexasHoldemApp {
                 table.setTableCards(tableCards);
                 Combinations comb = new Combinations();
                 comb.findBestTableCombination(table,tableCards);
-                //System.out.println(table.getWinValue());
-                //System.out.println(table.getBestCombination().toString());
+                System.out.println(table.getWinValue());
+                System.out.println(table.getBestCombination().toString());
 
                 for (int i = 0; i < numOfPlayers; i++) {
                     List<Card> playerCards = getListOfCards(line.substring(11 + 5*i, 11 + 5*i +4));
                     Player player = new Player();
                     player.setHandCards(playerCards);
                     comb.findBestPlayerCombination(player, table.getTableCards());
-                    //System.out.println(player.getWinValue());
-                    //System.out.println(player.getBestCombination());
+                    System.out.println(player.getWinValue());
+                    System.out.println(player.getBestCombination());
                     players.add(player);
                 }
                 comparePlayerCombinations(players);
@@ -114,8 +113,8 @@ public class TexasHoldemApp {
             }
         }
         result = replaceNumericToRank(result);
+        result = result.replaceFirst("=", " ");
         result = CharMatcher.whitespace().trimLeadingFrom(result);
-        result = CharMatcher.is('=').trimLeadingFrom(result);
 
         System.out.println(result);
     }
