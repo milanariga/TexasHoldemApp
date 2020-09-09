@@ -41,16 +41,16 @@ public class TexasHoldemApp {
                 table.setTableCards(tableCards);
                 Combinations comb = new Combinations();
                 comb.findBestTableCombination(table,tableCards);
-                System.out.println(table.getWinValue());
-                System.out.println(table.getBestCombination().toString());
+                //System.out.println(table.getWinValue());
+                //System.out.println(table.getBestCombination().toString());
 
                 for (int i = 0; i < numOfPlayers; i++) {
                     List<Card> playerCards = getListOfCards(line.substring(11 + 5*i, 11 + 5*i +4));
                     Player player = new Player();
                     player.setHandCards(playerCards);
                     comb.findBestPlayerCombination(player, table.getTableCards());
-                    System.out.println(player.getWinValue());
-                    System.out.println(player.getBestCombination());
+                    //System.out.println(player.getWinValue());
+                    //System.out.println(player.getBestCombination());
                     players.add(player);
                 }
                 comparePlayerCombinations(players);
