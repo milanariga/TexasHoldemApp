@@ -208,6 +208,22 @@ public class Combinations {
                         ((Player) object).setBestCombination(returnCombination);
                         return object;
                     }
+                } else if (pairCards.size() == 6){
+                    pairCards.remove(5);
+                    pairCards.remove(4);
+                    inputAfterPair.addAll(input);
+                    inputAfterPair.removeAll(pairCards);
+                    returnCombination.addAll(pairCards);
+                    returnCombination.add(inputAfterPair.get(0));
+                    if (object instanceof Table) {
+                        ((Table) object).setWinValue(PossibleValues.TWO_PAIRS);
+                        ((Table) object).setBestCombination(returnCombination);
+                        return object;
+                    } else if (object instanceof Player) {
+                        ((Player) object).setWinValue(PossibleValues.TWO_PAIRS);
+                        ((Player) object).setBestCombination(returnCombination);
+                        return object;
+                    }
                 }
             }
         }
