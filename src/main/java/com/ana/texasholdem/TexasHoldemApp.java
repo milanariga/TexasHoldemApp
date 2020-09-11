@@ -40,7 +40,7 @@ public class TexasHoldemApp {
                 Collections.sort(tableCards, Card.DESCENDING_ORDER);
                 table.setTableCards(tableCards);
                 Combinations comb = new Combinations();
-                comb.findBestTableCombination(table,tableCards);
+                //comb.findBestTableCombination(table,tableCards);
                 //System.out.println(table.getWinValue());
                 //System.out.println(table.getBestCombination().toString());
 

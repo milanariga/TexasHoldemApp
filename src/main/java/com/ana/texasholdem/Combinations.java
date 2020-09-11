@@ -30,49 +30,49 @@ public class Combinations {
     }
 
 
-    public void findBestTableCombination(Table table, List<Card> tableCards) {
-        List<Card> allCards = new ArrayList<>();
-        String winState;
-        allCards.addAll(tableCards);
-        Collections.sort(allCards, Card.DESCENDING_ORDER);
-        List<Card> winningComb = isStraight(allCards);
-        if (!winningComb.isEmpty()){
-            winState = defineStraightType(winningComb);
-            if (winState.equals("Royal Flush")){
-                table.setWinValue(PossibleValues.ROYAL_FLUSH);
-                table.setBestCombination(winningComb);
-            }
-            else if (winState.equals("Straight Flush")){
-                table.setWinValue(PossibleValues.STRAIGHT_FLUSH);
-                table.setBestCombination(winningComb);
-            }
-            else if (winState.equals("Straight")){
-                table.setWinValue(PossibleValues.STRAIGHT);
-                table.setBestCombination(winningComb);
-            }
-        }
-        else {
-            winningComb = isFlush(allCards);
-            if (!winningComb.isEmpty()){
-                table.setWinValue(PossibleValues.FLUSH);
-                table.setBestCombination(winningComb);
-            }
-            else {
-                winningComb = isFourOfKind(allCards);
-                if (!winningComb.isEmpty()){
-                    table.setWinValue(PossibleValues.FOUR_OF_A_KIND);
-                    table.setBestCombination(winningComb);
-                }
-                else {
-                    isPairOrThree(table,tableCards);
-                    if (table.getWinValue() == null){
-                        table.setWinValue(PossibleValues.HIGHCARD);
-                        table.setBestCombination(tableCards);
-                    }
-                }
-            }
-        }
-    }
+//    public void findBestTableCombination(Table table, List<Card> tableCards) {
+//        List<Card> allCards = new ArrayList<>();
+//        String winState;
+//        allCards.addAll(tableCards);
+//        Collections.sort(allCards, Card.DESCENDING_ORDER);
+//        List<Card> winningComb = isStraight(allCards);
+//        if (!winningComb.isEmpty()){
+//            winState = defineStraightType(winningComb);
+//            if (winState.equals("Royal Flush")){
+//                table.setWinValue(PossibleValues.ROYAL_FLUSH);
+//                table.setBestCombination(winningComb);
+//            }
+//            else if (winState.equals("Straight Flush")){
+//                table.setWinValue(PossibleValues.STRAIGHT_FLUSH);
+//                table.setBestCombination(winningComb);
+//            }
+//            else if (winState.equals("Straight")){
+//                table.setWinValue(PossibleValues.STRAIGHT);
+//                table.setBestCombination(winningComb);
+//            }
+//        }
+//        else {
+//            winningComb = isFlush(allCards);
+//            if (!winningComb.isEmpty()){
+//                table.setWinValue(PossibleValues.FLUSH);
+//                table.setBestCombination(winningComb);
+//            }
+//            else {
+//                winningComb = isFourOfKind(allCards);
+//                if (!winningComb.isEmpty()){
+//                    table.setWinValue(PossibleValues.FOUR_OF_A_KIND);
+//                    table.setBestCombination(winningComb);
+//                }
+//                else {
+//                    isPairOrThree(table,tableCards);
+//                    if (table.getWinValue() == null){
+//                        table.setWinValue(PossibleValues.HIGHCARD);
+//                        table.setBestCombination(tableCards);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     public void findBestPlayerCombination(Player player, List<Card> tableCards) throws ParseException {
         List<Card> allCards = new ArrayList<>();
@@ -353,6 +353,8 @@ public class Combinations {
             }
             if (straight.size() == 5){
                 return straight;
+            } else {
+                straight.clear();
             }
         }
         return straight;
