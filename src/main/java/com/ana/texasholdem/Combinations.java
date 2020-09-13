@@ -316,6 +316,9 @@ public class Combinations {
                 return straight;
             }
         }
+        if (straight.size() < 5){
+            straight.clear();
+        }
         return straight;
 
     }
@@ -339,7 +342,9 @@ public class Combinations {
         return straightType;
     }
 
-    public List<Card> removeDuplicateRanks(List<Card> input){
+    public List<Card> removeDuplicateRanks(List<Card> inputFull){
+        List<Card> input = new ArrayList<>();
+        input.addAll(inputFull);
         List<Card> withoutDupl = new ArrayList<>();
         for (int i = 0; i < input.size() - 1; i++) {
             if (input.get(i).getRank() != input.get(i+1).getRank()){

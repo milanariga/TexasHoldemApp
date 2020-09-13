@@ -39,8 +39,6 @@ public class TexasHoldemApp {
                 Collections.sort(tableCards, Card.DESCENDING_ORDER);
                 table.setTableCards(tableCards);
                 Combinations comb = new Combinations();
-                //System.out.println(table.getWinValue());
-                //System.out.println(table.getBestCombination().toString());
 
                 for (int i = 0; i < numOfPlayers; i++) {
                     List<Card> playerCards = getListOfCards(line.substring(11 + 5*i, 11 + 5*i +4));
@@ -66,13 +64,17 @@ public class TexasHoldemApp {
             public int compare(Player o1, Player o2) {
                 int i = o1.getWinValue().getValue() - o2.getWinValue().getValue();
                 if (i==0){
-                    if (o1.getWinValue() == PossibleValues.STRAIGHT
-                            || o1.getWinValue() == PossibleValues.STRAIGHT_FLUSH
-                            && (o1.getBestCombination().get(0).getRank() == 14
-                                && o1.getBestCombination().get(1).getRank() == 5)){
-                        i = 0 - o2.getBestCombination().get(0).getRank();
+                    if ((o1.getWinValue() == PossibleValues.STRAIGHT || o1.getWinValue() == PossibleValues.STRAIGHT_FLUSH)
+                            && (o1.getBestCombination().get(0).getRank() == 14 && o1.getBestCombination().get(1).getRank() == 5)){
+                        i = -1;
                     } else {
-                        i = o1.getBestCombination().get(0).getRank() - o2.getBestCombination().get(0).getRank();
+                        if ((o1.getWinValue() == PossibleValues.STRAIGHT || o1.getWinValue() == PossibleValues.STRAIGHT_FLUSH)
+                                && (o2.getBestCombination().get(0).getRank() == 14 && o2.getBestCombination().get(1).getRank() == 5)){
+                            i = o1.getBestCombination().get(0).getRank();
+                        }
+                        else {
+                            i = o1.getBestCombination().get(0).getRank() - o2.getBestCombination().get(0).getRank();
+                        }
                         if (i == 0) {
                             i = o1.getBestCombination().get(1).getRank() - o2.getBestCombination().get(1).getRank();
                             if (i == 0) {
@@ -88,10 +90,21 @@ public class TexasHoldemApp {
                     }
                 }
                 if (i==0){
-                    o2.setEqualWithPrevious(true);
                     i = o1.getHandCards().get(0).getRank() - o2.getHandCards().get(0).getRank();
-                    if (i==0) {
+                    if (i > 0){
+                        o1.setEqualWithPrevious(true);
+                    }
+                    else if (i < 0){
+                        o2.setEqualWithPrevious(true);
+                    }
+                    else if (i==0) {
                         i = o1.getHandCards().get(0).getSuit().compareTo(o2.getHandCards().get(0).getSuit());
+                        if (i > 0){
+                            o1.setEqualWithPrevious(true);
+                        }
+                        else if (i < 0){
+                            o2.setEqualWithPrevious(true);
+                        }
                     }
                 }
                 return i;
