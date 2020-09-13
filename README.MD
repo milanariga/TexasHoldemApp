@@ -52,8 +52,3 @@ where file = file to read
 
 where TexasHoldemAppDep.jar = jar file name
 
-**********************************
-#NOTES
-**********************************
-NB! When removing duplicated cards before checking for straight combination, suit is not taken into account,
-that could result in missing royal flush or straight flush.

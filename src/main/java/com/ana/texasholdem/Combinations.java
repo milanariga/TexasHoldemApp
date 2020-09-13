@@ -2,7 +2,6 @@ package com.ana.texasholdem;
 
 import com.ana.texasholdem.model.Card;
 import com.ana.texasholdem.model.Player;
-import com.ana.texasholdem.model.Table;
 
 import java.text.ParseException;
 import java.util.*;
@@ -18,61 +17,6 @@ public class Combinations {
 
     public Combinations(){
     }
-
-    public Combinations(Object object){
-        this.object = object;
-    }
-
-
-    public Combinations(Object object, List<Card> tableCards) {
-        this.object = object;
-        this.tableCards = tableCards;
-    }
-
-
-//    public void findBestTableCombination(Table table, List<Card> tableCards) {
-//        List<Card> allCards = new ArrayList<>();
-//        String winState;
-//        allCards.addAll(tableCards);
-//        Collections.sort(allCards, Card.DESCENDING_ORDER);
-//        List<Card> winningComb = isStraight(allCards);
-//        if (!winningComb.isEmpty()){
-//            winState = defineStraightType(winningComb);
-//            if (winState.equals("Royal Flush")){
-//                table.setWinValue(PossibleValues.ROYAL_FLUSH);
-//                table.setBestCombination(winningComb);
-//            }
-//            else if (winState.equals("Straight Flush")){
-//                table.setWinValue(PossibleValues.STRAIGHT_FLUSH);
-//                table.setBestCombination(winningComb);
-//            }
-//            else if (winState.equals("Straight")){
-//                table.setWinValue(PossibleValues.STRAIGHT);
-//                table.setBestCombination(winningComb);
-//            }
-//        }
-//        else {
-//            winningComb = isFlush(allCards);
-//            if (!winningComb.isEmpty()){
-//                table.setWinValue(PossibleValues.FLUSH);
-//                table.setBestCombination(winningComb);
-//            }
-//            else {
-//                winningComb = isFourOfKind(allCards);
-//                if (!winningComb.isEmpty()){
-//                    table.setWinValue(PossibleValues.FOUR_OF_A_KIND);
-//                    table.setBestCombination(winningComb);
-//                }
-//                else {
-//                    isPairOrThree(table,tableCards);
-//                    if (table.getWinValue() == null){
-//                        table.setWinValue(PossibleValues.HIGHCARD);
-//                        table.setBestCombination(tableCards);
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     public void findBestPlayerCombination(Player player, List<Card> tableCards) throws ParseException {
         List<Card> allCards = new ArrayList<>();
@@ -121,14 +65,14 @@ public class Combinations {
         }
     }
 
-    public Object isPairOrThree(Object object, List<Card> input){
+    public Object isPairOrThree(Player player, List<Card> input){
 
         boolean threeFlag = false;
 
         List<Card> returnCombination = new ArrayList<>();
         List<Card> returnThree = new ArrayList<>();
         List<Card> pairCards;
-        List<Card> threeCards = new ArrayList<>();
+        List<Card> threeCards;
         List<Card> inputAfterThree = new ArrayList<>();
         List<Card> inputAfterPair = new ArrayList<>();
 
@@ -146,34 +90,16 @@ public class Combinations {
             if (!pairCards.isEmpty()){
                 returnCombination.addAll(threeCards);
                 returnCombination.addAll(pairCards);
-                if (object instanceof Table){
-                    ((Table) object).setWinValue(PossibleValues.FULL_HOUSE);
-                    ((Table) object).setBestCombination(returnCombination);
-                    return object;
-                }
-                else if (object instanceof Player) {
-                    ((Player) object).setWinValue(PossibleValues.FULL_HOUSE);
-                    ((Player) object).setBestCombination(returnCombination);
-                    return object;
-                }
+                player.setWinValue(PossibleValues.FULL_HOUSE);
+                player.setBestCombination(returnCombination);
+                return player;
             }
             else {
-                if (object instanceof Table){
-                    ((Table) object).setWinValue(PossibleValues.THREE_OF_A_KIND);
-                    threeCards.add(inputAfterThree.get(0));
-                    threeCards.add(inputAfterThree.get(1));
-                    ((Table) object).setBestCombination(threeCards);
-
-                    return object;
-                }
-                else if (object instanceof Player) {
-                    ((Player) object).setWinValue(PossibleValues.THREE_OF_A_KIND);
-                    threeCards.add(inputAfterThree.get(0));
-                    threeCards.add(inputAfterThree.get(1));
-                    ((Player) object).setBestCombination(threeCards);
-                    return object;
-                }
-
+                player.setWinValue(PossibleValues.THREE_OF_A_KIND);
+                threeCards.add(inputAfterThree.get(0));
+                threeCards.add(inputAfterThree.get(1));
+                player.setBestCombination(threeCards);
+                return player;
             }
         } else {
             pairCards = getPair(input);
@@ -183,15 +109,9 @@ public class Combinations {
                     inputAfterPair.removeAll(pairCards);
                     returnCombination.addAll(pairCards);
                     returnCombination.add(inputAfterPair.get(0));
-                    if (object instanceof Table) {
-                        ((Table) object).setWinValue(PossibleValues.TWO_PAIRS);
-                        ((Table) object).setBestCombination(returnCombination);
-                        return object;
-                    } else if (object instanceof Player) {
-                        ((Player) object).setWinValue(PossibleValues.TWO_PAIRS);
-                        ((Player) object).setBestCombination(returnCombination);
-                        return object;
-                    }
+                    player.setWinValue(PossibleValues.TWO_PAIRS);
+                    player.setBestCombination(returnCombination);
+                    return player;
                 } else if (pairCards.size() == 2){
                     inputAfterPair.addAll(input);
                     inputAfterPair.removeAll(pairCards);
@@ -199,15 +119,9 @@ public class Combinations {
                     returnCombination.add(inputAfterPair.get(0));
                     returnCombination.add(inputAfterPair.get(1));
                     returnCombination.add(inputAfterPair.get(2));
-                    if (object instanceof Table) {
-                        ((Table) object).setWinValue(PossibleValues.PAIR);
-                        ((Table) object).setBestCombination(returnCombination);
-                        return object;
-                    } else if (object instanceof Player) {
-                        ((Player) object).setWinValue(PossibleValues.PAIR);
-                        ((Player) object).setBestCombination(returnCombination);
-                        return object;
-                    }
+                    player.setWinValue(PossibleValues.PAIR);
+                    player.setBestCombination(returnCombination);
+                    return player;
                 } else if (pairCards.size() == 6){
                     pairCards.remove(5);
                     pairCards.remove(4);
@@ -215,19 +129,13 @@ public class Combinations {
                     inputAfterPair.removeAll(pairCards);
                     returnCombination.addAll(pairCards);
                     returnCombination.add(inputAfterPair.get(0));
-                    if (object instanceof Table) {
-                        ((Table) object).setWinValue(PossibleValues.TWO_PAIRS);
-                        ((Table) object).setBestCombination(returnCombination);
-                        return object;
-                    } else if (object instanceof Player) {
-                        ((Player) object).setWinValue(PossibleValues.TWO_PAIRS);
-                        ((Player) object).setBestCombination(returnCombination);
-                        return object;
-                    }
+                    player.setWinValue(PossibleValues.TWO_PAIRS);
+                    player.setBestCombination(returnCombination);
+                    return player;
                 }
             }
         }
-        return object;
+        return player;
     }
 
     public List<Card> getPair(List<Card> input){
@@ -277,21 +185,19 @@ public class Combinations {
             fourOfKind.add(input.get(4));
             fourOfKind.add(input.get(0));
         }
-        else if (input.size() > 5){
-            if(input.get(2).getRank() == input.get(5).getRank()){
+        else if (input.get(2).getRank() == input.get(5).getRank()){
                 fourOfKind.add(input.get(2));
                 fourOfKind.add(input.get(3));
                 fourOfKind.add(input.get(4));
                 fourOfKind.add(input.get(5));
                 fourOfKind.add(input.get(0));
-            }
-            else if(input.get(3).getRank() == input.get(6).getRank()){
+        }
+        else if(input.get(3).getRank() == input.get(6).getRank()){
                 fourOfKind.add(input.get(3));
                 fourOfKind.add(input.get(4));
                 fourOfKind.add(input.get(5));
                 fourOfKind.add(input.get(6));
                 fourOfKind.add(input.get(0));
-            }
         }
         return fourOfKind;
     }
@@ -312,15 +218,51 @@ public class Combinations {
                 .filter(c -> c.getSuit().equals("d"))
                 .collect(Collectors.toList());
         if (spades.size() >= 5){
+            if (spades.size() > 5){
+                if (spades.size() == 6){
+                    spades.remove(5);
+                }
+                else {
+                    spades.remove(6);
+                    spades.remove(5);
+                }
+            }
             return spades;
         }
         else if (clubs.size() >= 5){
+            if (clubs.size() > 5){
+                if (clubs.size() == 6){
+                    clubs.remove(5);
+                }
+                else {
+                    clubs.remove(6);
+                    clubs.remove(5);
+                }
+            }
             return clubs;
         }
         else if (diamonds.size() >= 5){
+            if (diamonds.size() > 5){
+                if (diamonds.size() == 6){
+                    diamonds.remove(5);
+                }
+                else {
+                    diamonds.remove(6);
+                    diamonds.remove(5);
+                }
+            }
             return diamonds;
         }
         else if (hearts.size() >= 5){
+            if (hearts.size() > 5){
+                if (hearts.size() == 6){
+                    hearts.remove(5);
+                }
+                else {
+                    hearts.remove(6);
+                    hearts.remove(5);
+                }
+            }
             return hearts;
         } else {
 
@@ -335,6 +277,7 @@ public class Combinations {
         if (input.size() < 5){
             return straight;
         }
+
         for (int i = 0; i < input.size() - 1; i++) {
             if (input.get(i).getRank()  == input.get(i+1).getRank() + 1 ||
                     (input.get(i).getRank() == 14 && input.get(i+1).getRank() == 5) ||
@@ -347,10 +290,12 @@ public class Combinations {
                     }
                     else if (input.get(i).getRank() == 14 && input.get(i+2).getRank() == 5){
                         straight.add(input.get(i+2));
+                        i++;
                     }
                     else if (input.get(i).getRank() == 14 && input.get(i+3).getRank() == 5
                             && input.get(i+2).getRank() != 6){
                         straight.add(input.get(i+3));
+                        i += 2;
                     }
                     else {
                         straight.add(input.get(i + 1));
@@ -369,8 +314,6 @@ public class Combinations {
             }
             if (straight.size() == 5){
                 return straight;
-            } else {
-                straight.clear();
             }
         }
         return straight;
@@ -405,29 +348,70 @@ public class Combinations {
                     withoutDupl.add(input.get(i+1));
                 }
             }
-//            else if (input.get(i).getRank() == input.get(i+1).getRank()){
-//                if (i != 0){
-//                    if (input.get(i-1).getSuit() == input.get(i).getSuit()){
-//                        Card tempCard = new Card(input.get(i).getSuit(), input.get(i).getRank());
-//                        input.remove(i);
-//                        input.add(i+1, tempCard);
-//                    }
-//                    else if (input.get(i-1).getSuit() == input.get(i+1).getSuit()){
-//                        Card tempCard = new Card(input.get(i+1).getSuit(), input.get(i+1).getRank());
-//                        input.remove(i);
-//                        input.add(i, tempCard);
-//                    }
-//                }
-//                else if (i==0){
-//                    if (input.get(i).getSuit() == input.get(i+2).getSuit()){
-//                        Card tempCard = new Card(input.get(i).getSuit(), input.get(i).getRank());
-//                        input.remove(i);
-//                        input.add(i+1, tempCard);
-//                    }
-//                }
-//            }
-            if (i == input.size() - 2) {
-                withoutDupl.add(input.get(i));
+            else if (input.get(i).getRank() == input.get(i+1).getRank()){
+                if (i != 0){
+                    if (input.get(i-1).getSuit().equals(input.get(i).getSuit())){
+                        input.remove(i+1);
+                        if (i != input.size() - 1) {
+                            i--;
+                        }
+                        else {
+                            withoutDupl.add(input.get(i));
+                        }
+                    }
+                    else {
+                        input.remove(i);
+                        if (i != input.size() - 1) {
+                            i--;
+                        }
+                        else {
+                            withoutDupl.add(input.get(i));
+                        }
+                    }
+                }
+                else if (i==0){
+                    if (input.get(i).getRank() != input.get(i+2).getRank() &&
+                            input.get(i).getSuit().equals(input.get(i+2).getSuit())){
+                        input.remove(i+1);
+                        if (i != input.size() - 1) {
+                            i--;
+                        }
+                        else {
+                            withoutDupl.add(input.get(i));
+                        }
+                    }
+                    else if (input.get(i).getRank() != input.get(i+3).getRank() &&
+                            input.get(i).getSuit().equals(input.get(i+3).getSuit())){
+                        input.remove(i+2);
+                        input.remove(i+1);
+                        if (i != input.size() - 1) {
+                            i--;
+                        }
+                        else {
+                            withoutDupl.add(input.get(i));
+                        }
+                    }
+                    else if (input.get(i).getRank() != input.get(i+4).getRank() &&
+                            input.get(i).getSuit().equals(input.get(i+4).getSuit())) {
+                        input.remove(i + 3);
+                        input.remove(i + 2);
+                        input.remove(i + 1);
+                        if (i != input.size() - 1) {
+                            i--;
+                        } else {
+                            withoutDupl.add(input.get(i));
+                        }
+                    }
+                    else {
+                        input.remove(i);
+                        if (i != input.size() - 1) {
+                            i--;
+                        }
+                        else {
+                            withoutDupl.add(input.get(i));
+                        }
+                    }
+                }
             }
         }
         return withoutDupl;

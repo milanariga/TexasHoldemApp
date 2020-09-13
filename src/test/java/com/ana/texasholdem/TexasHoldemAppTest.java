@@ -1,6 +1,7 @@
 package com.ana.texasholdem;
 
 import com.ana.texasholdem.model.Card;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -41,26 +42,9 @@ public class TexasHoldemAppTest {
     public void testGettingListOfCards() {
         String input = "AcAdQcTs9h";
         List<Card> actualCards = TexasHoldemApp.getListOfCards(input);
-        List<Card> expectedCards = new ArrayList<>();
-        expectedCards.add(new Card("c", 14));
-        expectedCards.add(new Card("d", 14));
-        expectedCards.add(new Card("c", 12));
-        expectedCards.add(new Card("s", 10));
-        expectedCards.add(new Card("h", 9));
+        List<Card> expectedCards = TexasHoldemApp.getListOfCards("AcAdQcTs9h");
 
-        assertEquals("Size not equal", expectedCards.size(), actualCards.size());
-        assertEquals("0 element rank not equal", expectedCards.get(0).getRank(), actualCards.get(0).getRank());
-        assertEquals("1 element rank not equal", expectedCards.get(1).getRank(), actualCards.get(1).getRank());
-        assertEquals("2 element rank not equal", expectedCards.get(2).getRank(), actualCards.get(2).getRank());
-        assertEquals("3 element rank not equal", expectedCards.get(3).getRank(), actualCards.get(3).getRank());
-        assertEquals("4 element rank not equal", expectedCards.get(4).getRank(), actualCards.get(4).getRank());
-
-        assertEquals("0 element suit not equal", expectedCards.get(0).getSuit(), actualCards.get(0).getSuit());
-        assertEquals("1 element suit not equal", expectedCards.get(1).getSuit(), actualCards.get(1).getSuit());
-        assertEquals("2 element suit not equal", expectedCards.get(2).getSuit(), actualCards.get(2).getSuit());
-        assertEquals("3 element suit not equal", expectedCards.get(3).getSuit(), actualCards.get(3).getSuit());
-        assertEquals("4 element suit not equal", expectedCards.get(4).getSuit(), actualCards.get(4).getSuit());
-
+        Assert.assertEquals(expectedCards.toString(),actualCards.toString());
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.ana.texasholdem.model;
 
 import com.ana.texasholdem.PossibleValues;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public class Player {
     private List<Card> handCards;
     private List<Card> bestCombination;
     private PossibleValues winValue;
-    private boolean lowerThenTable = false;
+    private boolean equalWithPrevious = false;
 
     public Player(){}
 
@@ -21,12 +20,12 @@ public class Player {
         this.handCards = handCards;
     }
 
-    public boolean isLowerThenTable() {
-        return lowerThenTable;
+    public boolean isEqualWithPrevious() {
+        return equalWithPrevious;
     }
 
-    public void setLowerThenTable(boolean lowerThenTable) {
-        this.lowerThenTable = lowerThenTable;
+    public void setEqualWithPrevious(boolean equalWithPrevious) {
+        this.equalWithPrevious = equalWithPrevious;
     }
 
     public PossibleValues getWinValue() {

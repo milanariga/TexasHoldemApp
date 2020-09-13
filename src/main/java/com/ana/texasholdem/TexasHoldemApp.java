@@ -32,7 +32,6 @@ public class TexasHoldemApp {
                 }
                 List<Player> players = new ArrayList<>();
                 line = removeSpaces(line);
-                //System.out.println(line);
                 int numOfPlayers = getNumberOfPlayers(line);
 
                 Table table = new Table();
@@ -40,7 +39,6 @@ public class TexasHoldemApp {
                 Collections.sort(tableCards, Card.DESCENDING_ORDER);
                 table.setTableCards(tableCards);
                 Combinations comb = new Combinations();
-                //comb.findBestTableCombination(table,tableCards);
                 //System.out.println(table.getWinValue());
                 //System.out.println(table.getBestCombination().toString());
 
@@ -90,8 +88,7 @@ public class TexasHoldemApp {
                     }
                 }
                 if (i==0){
-                    o1.setLowerThenTable(true);
-                    o2.setLowerThenTable(true);
+                    o2.setEqualWithPrevious(true);
                     i = o1.getHandCards().get(0).getRank() - o2.getHandCards().get(0).getRank();
                     if (i==0) {
                         i = o1.getHandCards().get(0).getSuit().compareTo(o2.getHandCards().get(0).getSuit());
@@ -106,14 +103,13 @@ public class TexasHoldemApp {
     public static void printResult(List<Player> allPlayers){
         String result = "";
         for (Player p : allPlayers){
-            if (p.isLowerThenTable() == true){
+            if (p.isEqualWithPrevious() == true){
                 result = result + "=" + p.getHandCards().get(0).toString() + p.getHandCards().get(1).toString();
             } else {
                 result = result + " " + p.getHandCards().get(0).toString() + p.getHandCards().get(1).toString();
             }
         }
         result = replaceNumericToRank(result);
-        result = result.replaceFirst("=", " ");
         result = CharMatcher.whitespace().trimLeadingFrom(result);
 
         System.out.println(result);
