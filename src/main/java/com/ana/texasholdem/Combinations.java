@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class Combinations {
 
-    //Test3
+    //Test4
     private Object object;
     private List<Card> tableCards;
 
